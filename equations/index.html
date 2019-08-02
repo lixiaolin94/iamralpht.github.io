@@ -1,93 +1,104 @@
+<!DOCTYPE html>
 <html>
-<head>
-<title>Equations of motion</title>
-<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-<link href="article.css" rel="stylesheet"></link>
-<style>
-pre { font-size: 14px; }
-</style>
-</head>
-<body>
-<div class="content">
-<div class="title">Equations of motion</div>
-<div class="subtitle">by <a href="mailto:ralpht@gmail.com">Ralph Thomas</a><br>March 2015</div>
-<p>Setup: UI physics engines like Gravitas are very simple, coming down to just a few equations that compute a position given a time delta. Gravitas models three kinds of physical motion: friction, constant acceleration (or gravity) and springs.</p>
 
-<p><b>Friction</b></p>
-<p>Friction is the simplest equation: the velocity gets smaller at a constant rate. The simplest way to describe friction is to think of a function that we call every frame that computes the new velocity then adds it to the position:</p>
-<pre>
-var velocity = 2; // 2px a frame
-var position = 0; // start at 0px
-var friction = 0.99; // lose 1% of velocity every frame
+<head>
+    <title>运动学公式</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="note-wrapper">
+        <h1>运动学方程</h1>
+        <blockquote>
+            <p><i>原文： Ralph Thomas <a href="http://iamralpht.github.io/equations/">"Equations of motion"</a></i></p>
+        </blockquote>
+        <br>
+        <p>Setup：像 Gravitas 这样的 UI 物理引擎非常简单，只需几个方程式来计算给定时间增量的位置。 Gravitas 模型有三种物理运动：摩擦力，恒定加速度和弹力。</p>
+        <br>
+        <h2>摩擦力</h2>
+        <p>摩擦是最简单的方程：速度以恒定速率变小。 描述摩擦的最简单方法是设计出一个将每帧计算的新速度更新到位置的函数：</p>
+        <br>
+        <pre><code class='code-multiline'>var velocity = 2; // 2px 每帧
+var position = 0; // 0px 为起点
+var friction = 0.99; // 每帧降低 1％ 的速度
 
 function updatePosition() {
     position = position + velocity;
     velocity = velocity * friction;
-}
-</pre>
-<p>This is a simple implementation of motion under friction, but there are some problems:
-<ul>
- <li>If we ever drop frames then our object will have juddery motion because our function doesn't consider the amount of time that passed since the previous frame.</li>
- <li>We can't compute the position or velocity of an object at some point in the future without looping on updatePosition which is expensive and only accurate to a frame time.</li>
-</ul>
-First lets express the velocity as a function of time:
-<pre>
-// The velocity after 1s is v * drag, after 2s it's v * drag * drag,
-// after 3s it's v * drag * drag * drag.
-// It's the initialVelocity * friction ^ deltaTime, or in JavaScript:
+}</code></pre>
+        <p><br></p>
+        <p>这就是受摩擦力作用的运动的简单实现，但是存在一些问题：</p>
+        <ul>
+            <li>如果丢帧，那么对象将表现出抖动，因为该函数不考虑自前一帧以来经过的时间量。
+            </li>
+            <li>如果不在开销很大且仅精确到帧时间的 updatePosition 上循环，我们就无法计算对象在将来的某个时刻的位置或速度。
+            </li>
+        </ul>
+        <br>
+        <p>首先让我们将速度表示为基于时间的函数：</p>
+        <br>
+        <pre><code class='code-multiline'>// 1s 后的速度为 v * drag，2s 后 v * drag * drag
+// 在 3s 之后速度为 v * drag * drag * drag
+// 即 initialVelocity * friction ^ deltaTime，用 JavaScript 表示：
 
 function velocity(initialVelocity, friction, deltaTime) {
     return initialVelocity * Math.pow(friction, deltaTime);
-}
-</pre>
-We can integrate this to get the position as a function of time:
-<pre>
-function position(initialPosition, initialVelocity, friction, deltaTime) {
+}</code></pre>
+        <p><br></p>
+        <p>我们可以将其整合以获取基于时间的函数中的位置：</p>
+        <br>
+        <pre><code class='code-multiline'>function position(initialPosition, initialVelocity, friction, deltaTime) {
     return initialPosition + initialVelocity * Math.pow(friction, deltaTime) / Math.log(friction) - initialVelocity / Math.log(friction);
-}
-</pre>
-And that's a complete, precise implementation of friction! Gravitas caches the natural log of friction, but that's all there is too it!</p>
-<p><b>Constant Acceleration (or Gravity)</b></p>
-<p>Constant Acceleration is another straightforward equation. If you ever studied Calculus at school then you will have covered this! Lets look at the equation for velocity again, and then integrate it:
-<pre>
-// The current velocity with respect to time is: v' = v + a*t.
+}</code></pre>
+        <p><br></p>
+        <p>这就是一个完整、精确的摩擦函数实现！ Gravitas 缓存摩擦的自然对数，但这就是它的全部！</p>
+        <p>Gravitas caches the natural log of friction, but that’s all there is too it!</p>
+        <br>
+        <h2>恒定加速度</h2>
+        <p>恒定加速度是另一个简单的方程。如果你已经在学校里学过微积分就明白了！我们再看一下速度方程，然后对它积分：</p>
+        <br>
+        <pre><code class='code-multiline'>//当前速度相对于时间是： v' = v + a*t.
 
 function velocity(initialVelocity, acceleration, deltaTime) {
     return initialVelocity + acceleration * deltaTime;
 }
 
-// Integrating velocity gives us position as a function of time:
+// 对速度积分使位置成为时间的函数
 //   x' = x + v*t + 0.5*a*t^2
 
 function position(initialPosition, initialVelocity, acceleration, deltaTime) {
     return initialPosition + initialVelocity * deltaTime + 0.5 * acceleration * deltaTime * deltaTime;
-}
-</pre>
-That's constant acceleration -- one line!
-</p>
-<p><b>Springs: three cases</b></p>
-<p>Now we get to springs! Depending on the spring constant and damping there are three cases of springs: underdamped (the spring bounces around the end point before settling), critically damped (the spring has exactly enough damping to prevent any bouncing) and overdamped (the spring has more than enough damping to prevent bouncing). The spring implementation in Gravitas is based on Hooke's law:
-<pre>
-// F: force, k: spring constant, c: damping
+}</code></pre>
+        <p><br></p>
+        <p>这就是恒定加速度 —— 一条线！</p>
+        <br>
+        <h2>弹力: 三种情况</h2>
+        <p>现在我们到了弹力！ 取决于弹力常数和阻尼，有三种弹力：欠阻尼（弹簧在沉降前在终点附近弹跳），临界阻尼（弹簧有足够的阻尼来防止任何弹跳）和过阻尼（弹簧有足够的阻尼来防止弹跳）。Gravitas 的弹力实现基于胡克定律：
+        </p>
+        <br>
+        <pre><code class='code-multiline'>// F: force, k: spring constant, c: damping
 // x: position, v: velocity.
-F = -kx - cv
-</pre>
-This can be integrated as a second order differential equation. I had forgotten how to solve ODEs, so I looked the answer up in <a href="http://www.stewartcalculus.com/data/CALCULUS%20Concepts%20and%20Contexts/upfiles/3c3-AppsOf2ndOrders_Stu.pdf">this physics textbook</a> &mdash; the "Damped Vibrations" section is what we want. The textbook explains the equations fairly clearly, so rather than repeat that I'll show the JavaScript code that Gravitas uses to compute the position and velocity of a spring as a function of time.
-<pre>
-// This function takes the initial position, initial velocity, mass, spring constant and damping and
-// returns a functions to give the position and velocity as a function of time.
+F = -kx - cv</code></pre>
+        <p><br></p>
+        <p>这可以作为二阶微分方程被积分。 我已经忘记了如何解决高阶微分方程，所以我在 <a
+                href="http://www.stewartcalculus.com/data/CALCULUS%20Concepts%20and%20Contexts/upfiles/3c3-AppsOf2ndOrders_Stu.pdf">this
+                physics textbook</a> 中查找了答案 - ”Damped Vibrations（阻尼振动）“ 部分就是我们想要的。 教科书相当清楚地解释了这些方程式，因此我将不再重复，直接展示
+            Gravitas 用来计算弹簧的位置和速度作为时间函数的 JavaScript 代码。</p>
+        <br>
+        <pre><code class='code-multiline'>// 该方法采用 初始位置，初始速度，质量，弹力常数和阻尼
+// 并返回一个函数，使位置和速度作为时间的函数
 //
-// Only the mass, spring constant and damping change whether the spring is underdamped, critically
-// damped or underdamped.
-
-// @param initial   the initial position
-// @param velocity  the initial velocity
-// @param c         the spring damping
-// @param m         the mass of the object (I normally use "1").
-// @param k         the spring constant
+// 只有质量，弹力常数和阻尼能改变弹力是否欠阻尼，临界阻尼或欠阻尼
+// @param initial   初始位置
+// @param velocity  初始速度
+// @param c         弹性阻尼
+// @param m         对象的质量（通常使用“1”）。
+// @param k         弹性常数
 
 function solveSpring(initial, velocity, c, m, k) {
-    // Solve the quadratic equation; root = (-c +/- sqrt(c^2 - 4mk)) / 2m.
+    // 求解二次方程; root = (-c +/- sqrt(c^2 - 4mk)) / 2m.
     var cmk = c * c - 4 * m * k;
     if (cmk == 0) {
         // The spring is critically damped.
@@ -99,10 +110,10 @@ function solveSpring(initial, velocity, c, m, k) {
             x: function(t) { return (c1 + c2 * t) * Math.pow(Math.E, r * t); },
             dx: function(t) { var pow = Math.pow(Math.E, r * t); return r * (c1 + c2 * t) * pow + c2 * pow; }
         };
-    } else if (cmk > 0) {
-        // The spring is overdamped; no bounces.
+    } else if (cmk &gt; 0) {
+        // 弹力过阻尼，无弹跳
         // x = c1*e^(r1*t) + c2*e^(r2t)
-        // Need to find r1 and r2, the roots, then solve c1 and c2.
+        // 需要找出根 r1 和 r2，然后解出 c1 和 c2.
         var r1 = (-c - Math.sqrt(cmk)) / (2 * m);
         var r2 = (-c + Math.sqrt(cmk)) / (2 * m);
         var c2 = (velocity - r1 * initial) / (r2 - r1);
@@ -113,7 +124,7 @@ function solveSpring(initial, velocity, c, m, k) {
             dx: function(t) { return (c1 * r1 * Math.pow(Math.E, r1 * t) + c2 * r2 * Math.pow(Math.E, r2 * t)); }
             };
     } else {
-        // The spring is underdamped, it has imaginary roots.
+        // 弹力欠阻尼, 有假想根.
         // r = -(c / 2*m) +- w*i
         // w = sqrt(4mk - c^2) / 2m
         // x = (e^-(c/2m)t) * (c1 * cos(wt) + c2 * sin(wt))
@@ -132,14 +143,24 @@ function solveSpring(initial, velocity, c, m, k) {
             }
         };
     }
-}
-</pre>
-OK, so springs are way more complex than friction or constant acceleration, but the actual functions that solveSpring generates are still quite simple.</p>
-</div>
-<div class="about">
-<div class="ralpht"></div>
-<div class="title">About the author</div>
-Ralph Thomas is a former high-school physics student who has spent the past 15 years focused on user interface implementation. A "full-stack" client engineer, Ralph has written high-performance mobile UIs from kernel input drivers, through OpenGL ES-based 2D graphics engines, physics engines and user interface toolkits up to full applications built on those foundations. Ralph has also contributed performance enhancements to the WebKit project. Follow Ralph on <a href="https://twitter.com/i_am_ralpht">Twitter</a> or send him <a href="mailto:ralpht@gmail.com">email</a>.
-</div>
+}</code></pre>
+        <p><br></p>
+        <p>好吧，所以弹力比摩擦力、恒定加速度更复杂，但解决弹力生成的实际功能仍然非常简单。</p>
+    </div>
+    <script type="text/javascript">
+        (function () {
+
+            var doc_ols = document.getElementsByTagName("ol");
+
+            for (i = 0; i < doc_ols.length; i++) {
+
+                var ol_start = doc_ols[i].getAttribute("start") - 1;
+                doc_ols[i].setAttribute("style", "counter-reset:ol " + ol_start + ";");
+
+            }
+
+        })();
+    </script>
 </body>
+
 </html>
