@@ -1,7 +1,13 @@
+<!DOCTYPE html>
 <html>
+
 <head>
-<title>Creating Animations and Interactions with Physical Models</title>
-<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <title>使用物理模型创建动画和交互</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
 <!-- utilities -->
 <script src="animate.js"></script>
 <script src="controls.js"></script>
@@ -14,253 +20,269 @@
 
 <!-- springy buttons demo -->
 <script src="buttons.js"></script>
-<link href="buttons.css" rel="stylesheet"></link>
+<link href="buttons.css" rel="stylesheet">
 
 <!-- android wear back demo -->
 <script src="androidwear.js"></script>
-<link href="androidwear.css" rel="stylesheet"></link>
+<link href="androidwear.css" rel="stylesheet">
 
 <!-- windows 8 lock screen demo -->
 <script src="windows8lock.js"></script>
-<link href="windows8lock.css" rel="stylesheet"></link>
+<link href="windows8lock.css" rel="stylesheet">
 
 <!-- friction and gravity sliders demo -->
 <script src="sliders.js"></script>
-<link href="sliders.css" rel="stylesheet"></link>
+<link href="sliders.css" rel="stylesheet">
 
 <!-- various falling dialogs demos -->
 <script src="fallingdialogs.js"></script>
-<link href="fallingdialogs.css" rel="stylesheet"></script>
+<link href="fallingdialogs.css" rel="stylesheet">
 
 <!-- iTunes Radio continuous scrolling -->
 <script src="itunesradio.js"></script>
-<link href="itunesradio.css" rel="stylesheet"></link>
+<link href="itunesradio.css" rel="stylesheet">
+
 
 <!-- Scrolling with friction and springs -->
 <script src="scrollingexample.js"></script>
-<link href="scrollingexample.css" rel="stylesheet"></link>
+<link href="scrollingexample.css" rel="stylesheet">
+
 
 <!-- Gyro-controlled gravity -->
 <script src="gyrovelocity.js"></script>
-<link href="gyrovelocity.css" rel="stylesheet"></link>
+<link href="gyrovelocity.css" rel="stylesheet">
 
-<link href="controls.css" rel="stylesheet"></link>
+
+<link href="controls.css" rel="stylesheet">
+
 <style>
-body {
-    font-family: 'Source Sans Pro', sans-serif;
-    margin: 0;
-    font-size: 22px;
-}
-.content {
-    margin: 40px 10%;
-    margin-bottom: 0;
-}
-div {
-    margin-bottom: 20px;
-}
-.title {
-    font-weight: bold;
-    font-size: 48;
-    margin-bottom: 20px;
-}
-.subtitle {
-    font-size: 18px;
-}
-.embed {
-    padding-top: 10px;
-    height: 550px;
-}
-img {
-    display: inline-block;
-    max-width: 25vw;
-}
-li {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
-.example {
-    box-sizing: border-box;
-    width: 100%;
-    background-color: #404040;
-    color: white;
-    border: none;
-    text-align: center;
-    padding: 10px;
+    .embed {
+        padding-top: 10px;
+        height: 550px;
+    }
 
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-}
-#fab>iframe {
-    border: none;
-    width: 100%;
-    height: 500px;
-}
+    img {
+        display: inline-block;
+        max-width: 25vw;
+    }
 
-.about {
-    position: relative;
-    width: 100%;
-    background-color: #e0e0e0;
-    margin: 0;
-    padding: 15px 10%;
-    padding-bottom: 40px;
-    box-sizing: border-box;
-    font-size: 18px;
-    min-height: -webkit-calc(10vw);
-}
-.ralpht {
-    background-image: url(../ralpht.jpg);
-    background-size: cover;
-    position: absolute;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    width: -webkit-calc(10vw - 40px);
-    height: -webkit-calc(10vw - 40px);
-    width: calc(10vw - 40px);
-    height: calc(10vw - 40px);
-    margin-right: 20px;
-    border-radius: 100px;
-    border: 2px solid white;
-    box-shadow: 0px 1px 2px black;
-}
-.about>.title {
-    font-size: 22px;
-    margin-bottom: 10px;
-}
+    li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+
+    .example {
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0.5em 0;
+        background: #fbfbfb;
+        border: solid 1px #ddd;
+        text-align: center;
+        padding: 10px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    #fab>iframe {
+        background: #fbfbfb;
+        border: solid 1px #ddd;
+        width: 100%;
+        height: 500px;
+    }
+
+
+    .ralpht {
+        background-image: url(../ralpht.jpg);
+        background-size: cover;
+        position: absolute;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        width: -webkit-calc(10vw - 40px);
+        height: -webkit-calc(10vw - 40px);
+        width: calc(10vw - 40px);
+        height: calc(10vw - 40px);
+        margin-right: 20px;
+        border-radius: 100px;
+        border: 2px solid white;
+        box-shadow: 0px 1px 2px black;
+    }
 </style>
 </head>
+
 <body>
-<div class="content">
-<div class="title">使用物理模型创建动画和交互</div>
-<div class="subtitle">by <a href="mailto:ralpht@gmail.com">Ralph Thomas</a><br>8 November 2014</div>
-<!-- introduction -->
-<p>基于物理的动画和交互在UI中越来越普及。这里介绍了一些基本的物理模型以及可以从中构建的各种交互和动画。</p>
-<p>Scrolling on iOS is an excellent example of a physics-based interaction. When you drag your finger across the screen, the content tracks along with it, thereby scrolling, but <i>when you lift your finger</i> all of the physics magic happens: the content continues tracking with the same momentum and slows down under the influence of (virtual) friction. If you hit the end of the content, then the momentum goes into an overdamped spring which absorbs the momentum and returns you to the end of the content.</p>
-<p>iOS的滚动是一个很好的基于物理的交互的例子。当你在屏幕上拖动手指时，内容会随之滚动，从而滚动，但是<i>当您抬起手指时</i>所有物理魔法都会发生：内容会以相同的动量继续跟踪并减慢速度 在（虚拟）摩擦的影响下。 如果你到达内容的末尾，那么动量会进入一个过阻尼的弹簧，吸收动量并返回到内容的末尾。</p>
-<p>Everyone is familiar with scrolling, and all of the touch-based operating systems implement it because it feels so natural to use. But lets start with something a bit simpler: here are two buttons which get a bit smaller when you push down on them (to give visible feedback indicating that the UI has received your touch input). One of these buttons uses an underdamped spring to control its size, while the other uses more traditional CSS transitions.</p>
-</div>
+    <div class="note-wrapper">
+        <h1>使用物理模型创建动画和交互</h1>
+        <blockquote>
+            <p>原文： Ralph Thomas <a href="http://iamralpht.github.io/physics/">Creating Animations and Interactions with
+                    Physical Models</a></p>
+        </blockquote>
+        <br>
+        <p>基于物理的动画和交互在UI中越来越普及。 这个页面介绍了一些基本的物理模型以及可以从中构建的各种交互和动画。</p>
+        <br>
+        <p>iOS 的滚动器是基于物理的交互的一个很好的例子。 当你在屏幕上拖动手指时，内容会随之滚动，但当你抬起手指时，物理的魔力将展现在你眼前：内容会以相同的动量继续运动，并在摩擦力（虚拟）的影响下减速。
+            如果你到达内容的末尾，那么动量会进入一个过阻尼的弹力，吸收动量并返回到内容的末尾。</p>
+        <br>
+        <p>每个人都熟悉滚动器，并且所有基于触摸的操作系统都实现了它，因为它使用起来非常自然。 但是让我们从更简单的东西开始：这里有两个按钮，当你按下它们时会变小一些（给出可见的反馈，表明UI已经接收到你的触摸输入）。
+            其中一个按钮使用欠阻尼弹力来控制其大小，而另一个使用更传统的CSS过渡。</p>
 
-<div class="example" id="buttonExample"></div>
+        <div class="example" id="buttonExample"></div><br>
 
-<div class="content">
-<ul>
- <li>Push on each button periodically. Try setting the damping to 1 and see how large you can make the button.</li>
- <li>How does the spring constant relate to the speed of motion when you have a small damping? How are damping and the spring constant related?</li>
-</ul>
-<!-- importance of conserving momentum -->
-<p><b>Conserving momentum</b></p>
-<p>In the button example above, the user input is a binary press (the button is either being pressed or not). In most of the other examples on this page, we'll instead seed the physics simulation with the current momentum and position of an object. To simplify the code, I always use a mass of 1, which means that velocity and momentum are the same number and thus interchangeable.</p>
-<p>Why is it important to conserve momentum, though? What happens if we create animations that ignore the momentum that the user imparted to the UI?</p>
-<p>This example is the UI for navigating back in <a href="http://www.android.com/wear/">Android Wear</a>: you drag from the left to the right and release. One version ignores your momentum and just runs the same animation every time. The other example rolls the momentum into an constant acceleration (gravity) simulation if you drag with enough velocity or beyond the half-way point. If you don't drag far enough or drag in the other direction then a spring is used to take the menu back to where it started.</p>
-</div>
+        <ul>
+            <li>轮流按下每个按钮。 尝试将阻尼设置为1并查看你能让按钮变多大。
+            </li>
+            <li>当阻尼较小时，弹力常数与运动速度如何相关？ 阻尼和弹簧常数如何相关？
+            </li>
+        </ul>
+        <br>
+        <!-- importance of conserving momentum -->
+        <h2>保持动量</h2>
+        <p>在上面的按钮示例中，用户输入的是二进制状态（按钮是否被按下）。 在本页的大多数其他示例中，我们将使用当前动量和对象的位置来进行物理模拟。 为了简化代码，我们将质量的值定为 1，这意味着速度和动量值将相同，因此可以互换。
+        </p>
+        <br>
+        <p>但是，为什么保持动量很重要？ 如果我们创建的动画忽略了用户赋予UI的动力，会发生什么？</p>
+        <br>
+        <p>这个示例是用于在 Android Wear 中导航的UI：从左向右拖动页面并释放。
+            一个版本忽略了用户的动量，每次只运行相同的动画。而在另一个示例中，如果以足够的速度拖动页面或拖动位置超出中间点，则动量将被滚动到恒定加速度（引力）模拟中。
+            如果你没有拖得足够远或向另一个方向拖动，那么使用弹力将页面带回到它开始的位置。</p>
 
-<div class="example" id="androidWearExample">
-</div>
-<div class="content">
-<ul>
- <li>How does it feel when the menu continues moving with the momentum that you gave it? How about when it just uses the canned transition?</li>
- <li>I used two physical simulations here, picking one depending on the velocity and end position. I started out using a single spring to do everything. That didn't work out because the cancel animation was too slow, so next I tried using one spring for "back" and one spring for cancelling the gesture. I then decided that maybe constant acceleration would feel better, and that's what is in there now. One nice thing about modeling with physical objects is that you have a lot of choice over how to make things behave.</li>
-</ul>
-<p><a href="http://munews.missouri.edu/news-releases/2012/0124-babies-are-born-with-%E2%80%9Cintuitive-physics%E2%80%9D-knowledge-says-mu-researcher/">Recent research suggests we have an understanding of conservation of momentum from birth</a>. I believe that UI which upholds these strongly held expectations is more pleasing than UI that ignores them.</p>
+        <div class="example" id="androidWearExample"></div><br>
+        <ul>
+            <li>当页面继续以你给出的动量移动时感觉如何？使用固定过渡的时候感觉如何？
+            </li>
+            <li>我在这里使用了两个物理模拟，根据速度和结束位置选择一个。 我开始用单个弹力做任何事情。 但这没有用，因为取消动画太慢了，所以接下来我尝试使用一个弹力“后退”和一个弹力取消手势。
+                然后我决定可能不断加速会感觉更好，那就是现在的情况。 使用物理对象建模的一个好处是，您可以在如何使事物表现方面有很多选择。
+            </li>
+        </ul>
+        <p> <a
+                href="http://munews.missouri.edu/news-releases/2012/0124-babies-are-born-with-%E2%80%9Cintuitive-physics%E2%80%9D-knowledge-says-mu-researcher/">研究</a>
+            表明我们从出生时就对动量守恒有所了解。我认为维持这些强烈期望的UI更令人愉悦。</p>
+        <br>
+        <!-- different simulations -->
+        <h2>不同的模拟</h2>
+        <p>我们将看看三个简单的模拟：弹力，恒定加速度（或引力）和摩擦力。 这听起来很无聊，但结合触摸，我们可以想出一些优秀的互动。</p>
+        <br>
+        <p>在这个例子中，我们使用引力来创建一个类似于 Windows 8 中的锁屏。当您向上拖动图像并释放时，它会保持其动量，但会被恒定的加速度拉低。 如果你没有给它足够的动力，那么它会下降并且机器保持锁定状态。
+            这是一个基于物理的滑动解锁变体。</p>
+        <div class="example" id="lockScreenExample"></div><br>
+        <ul>
+            <li>尝试将锁定屏幕撞到地面！
+            </li>
+            <li>将 Rebound 设置为 1.0 会发生什么？ 1.1 怎么样？
+            </li>
+            <li>按“重置位置”，然后尝试将加速度设置为负值。 现在我们已经更改了UI，以便任何向上拖动都可以解锁机器，就像在Android或iOS上隐藏通知列表一样。 物理模拟可以根据这些常数给出非常不同的感觉。
+            </li>
+        </ul>
+        <br>
+        <p>现在我们将比较恒定减速度（这与上面的引力例子几乎相同；它只是意味着加速度常数是负的）与摩擦力。 当我第一次开始学习物理模拟时，我认为恒定减速模拟是减慢速度并将其用于一切的唯一方法，包括滚动。 结果太可怕了！
+            我的滚动内容会突然停止，与其他人相比感觉不好。 对于滚动以及滑块，摩擦是一种更好的模拟感觉。</p>
+        <br>
+        <p>考虑减速度和摩擦力之间差异的一种方法是：想象在物体再次开始下降之前将物体投入空中时，物体会减速（恒定减速度）；和物体像空气曲棍球一样在关闭的球桌上被推动后放慢速度（摩擦）。从数学的角度来看，恒定减速是时间的二次函数，而摩擦是幂函数，其中时间是指数。
+        </p>
+        <br>
+        <p>在这个例子中，您可以看到恒定减速度和摩擦力之间的差异。 给每个滑块一个短而缓慢的投掷并观察它们如何减速。</p>
 
-<!-- different simulations -->
-<p><b>Different simulations</b></p>
-<p>We're going to look at three simple simulations: springs, constant acceleration (or gravity) and friction. These sound pretty boring, but combined with touch we can come up with some good interactions.</p>
-<p>In this example we're using gravity to create a lock screen like the one in Windows 8. When you drag up on the image and release, it keeps its momentum but is pulled down by a constant acceleration. If you don't give it enough momentum, then it falls back down and the machine stays locked. This is a physics-based variant of slide-to-unlock.</p>
-</div>
-<div class="example" id="lockScreenExample"></div>
-<div class="content">
-<ul>
- <li>Try slamming the lock screen into the ground!</li>
- <li>What happens when you set the Rebound to 1.0? What about 1.1?</li>
- <li>Press "Reset Position" and then try setting the acceleration to a negative value. Now we've changed the UI so that any upwards drag will unlock the machine&mdash;like hiding the notification list on Android or iOS. Physics simulations can give a very different feel depending on these constants.</li>
-</ul>
-<p>Now we're going to compare constant deceleration (which is almost the same as the gravity example above; it just means the acceleration constant is negative) with friction. When I first started learning about physics simulations I thought that the constant deceleration simulation was the only way to slow things down and used it for everything, including scrolling. The result was terrible! My scrolling content would stop too abruptly and have a bad feel compared to everyone else's. For scrolling, as well as sliders, friction is a much better feeling simulation.</p>
-<p>One way to think of the difference between deceleration and friction is to visualize the way an object slows down when you throw it up into the air before it starts falling again (this is constant deceleration) and the way an object slows down after it's been pushed along a table like an air-hockey puck when the table is off (friction). For the mathematically inclined, <a href="https://github.com/iamralpht/iamralpht.github.io/blob/master/physics/gravity.js">constant deceleration is a quadratic function of time</a> whereas <a href="https://github.com/iamralpht/iamralpht.github.io/blob/master/physics/friction.js">friction is a power function where time is the exponent</a>.</p>
-<p>In this example you can see the difference between constant deceleration and friction. Give each of the sliders a short, slow fling and watch how they slow down.</p>
-</div>
-<div class="example" id="slidersExample"></div>
-<div class="content">
-<ul>
- <li>Notice how the Decelerating Slider (which is using a constant deceleration) doesn't feel good. Either it goes too far or stops too abruptly. Gravity was the perfect simulation for the lock screen (and the dialogs below) but friction creates a much more natural feel for these sliders and for scrolling.</li>
- <li>When the thumb hits the end of the slider it just stops moving, and all momentum is immediately lost. What can we do so that we're not throwing away all of the thumb's momentum? We could drag the whole control, we could let the thumb go over the end slightly, or we could even squish the thumb a bit!</li>
-</ul>
-<!-- combining simulations: fall, scroll -->
-<p><b>Combining simulations</b></p>
-<p>So far we've used individual simulations (spring, gravity and friction) to create various interactions and animations. We can actually combine them to create even more interesting systems. In my recent game for Android, <a href="https://play.google.com/store/apps/details?id=com.infinite_imagination.letterplex">Letterplex</a>, I made the dialogs fall from the top of the screen and land in the middle (as they do in the iOS inspiration <a href="http://www.atebits.com/letterpress/">Letterpress</a>). However when they reach the middle of the screen, they bounce slightly as if landing on a cloud (or an overdamped spring).</p>
-<p>In this non-interactive example you can see how the combination of gravity and a spring makes a nice feeling animation. Hit "Reset Position" to start the animation over.</p>
-</div>
-<div class="example" id="fallingDialogsExample"></div>
-<div class="content">
-<ul>
- <li>Notice how this combination is very sensitive to the damping value&mdash;try setting it to 1. Even though momentum is conserved we get something that feels distinctly weird, like a fly falling into a spider's web.</li>
- <li>Play with the acceleration and spring constant to get a feel for how the gravity and spring constants interact. A high spring constant gives us something like NeXT's "head shaking" log in dialog, only vertically.</li>
-</ul>
-<p>Perhaps the most significant combination is friction with a spring to create scrolling. You've certainly seen this before, but try changing the coefficient of friction and the spring constants to better understand the kinds of systems you can create with these simple primitives.</p>
-</div>
-<div class="example" id="scrollingExample"></div>
-<div class="content">
-<ul>
- <li>Try setting the friction to the smallest value (0.001) and the largest value (0.1) and notice how it changes how far your flicks cause the list to scroll. iOS actually uses different friction coefficients in different places&mdash;In Contacts your flicks take you a lot further than they do in Safari, for example.</li>
-</ul>
-<p>Once you understand how something like scrolling is constructed, it's easy to make things like the "infinite" linear scroller in iTunes Radio on iOS 7. Here we have a constant velocity giving us a linear animation. Note: If you think you might ever drop a frame, <i>don't</i> use linear translation animations. Humans are amazing at tracking linear motion, so dropped frames will be perceived as very jarring. In contrast, humans seem bad at tracking things zooming in or out, so you can drop all kinds of frames in a zoom animation and most people won't notice.</p>
-<p>This example uses a tweaked friction simulation that has a constant velocity which can be temporarily overcome by flicking left or right. Notice what happens when your imparted momentum is consumed and the scroller resumes its previous motion. It's smooth and seamless.</p>
-</div>
-<div class="example" id="iTunesRadioExample"></div>
-<div class="content">
-<!-- mapping inputs and outputs: gyro controlled gravity, proximity triggered spring that follows you, squishy bounce -->
-<p><b>Mapping inputs and outputs</b></p>
-<p>So far we've used press and velocity as inputs, and we've mapped the output of the physics simulation to either the translation or scale of the object. Our devices have a bunch of sensors and we can control more than just the initial velocity.</p>
-<p>Here's an example where (on mobile only) we use the gyroscope to control the velocity to pan around in a photo. This is similar to Facebook Paper's photo viewer, <a href="http://subjc.com/facebook-paper-photo-panner/">but Facebook Paper uses a direct relationship between the gyro and the scroll position</a>.</p>
-<p>Note that this example only works on devices with gyroscopes.</p>
-</div>
-<div class="example" id="gyroVelocityExample"></div>
-<div class="content">
-<ul>
- <li>Is it annoying when you're trying to hold the photo still? We could add a dead zone in the middle of the gyroscope output where we round it to zero to improve this.</li>
- <li>I initially wrote this example with the gyroscope controlling acceleration. This felt terrible! It would accelerate off left or right, and you'd overcompensate in the other direction. Controlling the velocity feels pretty good, and moves smoothly even though the gyroscope is a fairly noisy sensor.</li>
-</ul>
+        <div class="example" id="slidersExample"></div><br>
+        <ul>
+            <li>请注意减速滑块（使用恒定减速度）为什么感觉不太好。 它要么走得太远，要么突然停止。 引力是锁屏（以及下面的对话框）的完美模拟，但摩擦为这些滑块和滚动创造了更自然的感觉。
+            </li>
+            <li>当拇指碰到滑块的末端时，它会停止移动，并且所有动量都会立即丢失。 我们能做些什么，以至于我们不会丢掉所有拇指的动力？ 我们可以拖动整个控件，我们可以让拇指轻轻地越过末端，或者我们甚至可以稍微挤压拇指！
+            </li>
+        </ul>
+        <br>
+        <!-- combining simulations: fall, scroll -->
+        <h2>结合模拟</h2>
+        <p>到目前为止，我们已经使用单独的模拟（弹力，引力和摩擦力）来创建各种交互和动画。 我们实际上可以将它们组合起来以创建更有趣的系统。 在我最近的 Android 游戏 Letterplex
+            中，我让对话框从屏幕顶部掉落并落在中间（灵感来自 iOS Letterpress）。 然而，当它们到达屏幕的中间时，它们会轻微地反弹，就好像落在云上（或过阻尼的弹力）。</p>
+        <br>
+        <p>在这个非交互式的例子中，您可以看到重力和弹簧的组合如何产生一种美妙的动画效果。 点击“重置位置”开始动画。</p>
 
-<p>We can also trigger springs based on proximity. <a href="/fab">I wrote up this example previously</a>. Each face circle has a spring which is triggered when the cursor gets close. The motion of the face is then controlled by both the spring and the cursor position: the spring controls how far the face should be between its natural home position and where the cursor currently is.</p>
-</div>
-<div class="example" id="fab">
-<iframe src="../fab/demo/index.html"></iframe>
-</div>
-<div class="content">
-<p>Phew! Here's an example of mapping the output of a physics system differently. It's the "falling dialog" example from above, except that instead of translating the dialog downwards when it hits the ground, we squish it. Non-uniform scales don't usually look very pleasing, so it's hard to find any examples like this in real products.</p>
-</div>
-<div class="example" id="squishyDialogsExample"></div>
-<!-- adding extra non-physical effects: rotation on fall -->
-<div class="content">
-<p><b>Adding extra effects</b></p>
-<p>Sometimes you've got a good looking animation or interaction, but you want to add something extra to it that is non-physical. Here's an example of adding a rotation to the falling dialog to make it look less one-dimensional. The question and answer app <a href="https://jelly.co/">Jelly</a> uses this to good effect when animating the question cards.</p>
-</div>
-<div class="example" id="rotatingDialogsExample"></div>
-<div class="content">
-<!-- conclusion -->
-<p><b>Conclusion</b></p>
-<p>What did we learn?</p>
-<ul>
- <li>Physical models let us easily create rich animations and interactions that feel more natural by conforming to our innate expectations of how things should move and respond.</li>
- <li>Physical models give us enough flexibility to create a wide variety of interactions and animations.</li>
- <li>Physical models can be combined to create more complex and dynamic systems.</li>
- <li>We can use all kinds of inputs to physical models, and map their results differently to create the effects we want.</li>
-</ul>
-<p>I made a lot of mistakes and rewrote a couple of examples while writing this article (<a href="https://github.com/iamralpht/iamralpht.github.io/commits/master">read my mistakes in the commit log</a>). What did <b>I</b> learn?</p>
-<ul>
- <li>I didn't have a good grasp on what the spring constant and damping do to the "feel" of the spring before writing this. I had a solid algebraic understanding of a spring, but lacked a good intuitive understanding. That's the strength of interactive examples!</li>
- <li>The CSS transition version of the Android Wear back gesture actually works better than I expected, so the difference between the two versions is more subtle than I wanted. As I noted above, I also tried using a spring to model it at first, and later switched to acceleration which feels a lot better!</li>
- <li>Don't map the gyroscope to acceleration for panning! It was obvious what I needed to do as soon as I saw it running, but it wasn't obvious to me before.</li>
- <li>The squishy dialog is neat! I thought it'd look really bad, but I actually quite like it. Coincidentally squash and stretch is <a href="http://en.wikipedia.org/wiki/12_basic_principles_of_animation#Squash_and_stretch">the most important of Disney's 12 Principles of Animation</a>.</li>
-</ul>
-<p>The commented JavaScript source code to all of the above examples is available <a href="https://github.com/iamralpht/iamralpht.github.io/tree/master/physics">on github</a>. Also check out <a href="https://github.com/iamralpht/gravitas">Gravitas</a>, a Java library I wrote which contains many of the physical models used here.</p>
-</div>
-<div class="about">
-<div class="ralpht"></div>
-<div class="title">About the author</div>
-Ralph Thomas is a former high-school physics student who has spent the past 15 years focused on user interface implementation. A "full-stack" client engineer, Ralph has written high-performance mobile UIs from kernel input drivers, through OpenGL ES-based 2D graphics engines, physics engines and user interface toolkits up to full applications built on those foundations. Ralph has also contributed performance enhancements to the WebKit project. Follow Ralph on <a href="https://twitter.com/i_am_ralpht">Twitter</a> or send him <a href="mailto:ralpht@gmail.com">email</a>.
-</div>
-</div>
+        <div class="example" id="fallingDialogsExample"></div><br>
+        <ul>
+            <li>请注意这个组合对阻尼值非常敏感 —— 尝试将其设置为1。即使保留动量，我们也会感觉到一些非常奇怪的东西，就像苍蝇落入蜘蛛网中一样。
+            </li>
+            <li>使用加速度和弹力常数来感受引力和弹力常数如何相互作用。 高的弹力常数给我们提供了像垂直方向的 NeXT 的“摇头”登录对话框。
+            </li>
+        </ul>
+        <br>
+        <p>也许最重要的组合是用摩擦力和弹力来创建滚动器。 你之前已经看过这个，但是尝试更改摩擦系数和弹力常数，以便更好地理解使用这些简单基元创建的系统类型。</p>
+
+        <div class="example" id="scrollingExample"></div><br>
+        <p>尝试将摩擦力设置为最小值（0.001）和最大值（0.1），并注意它是如何改变您的轻拂导致列表滚动的距离。 iOS 实际上在不同的地方使用不同的摩擦系数 ——例如，在联系人中轻拂手势会比在 Safari
+            中行进的要多得多。</p>
+        <br>
+        <p>一旦你理解了滚动器的构造，就可以轻松地制作 iOS 7 中 iTunes Radio 的 “无限” 线性滚动器。这里我们有一个恒定的速度给我们一个线性动画。 注意：如果您认为可能丢帧，请不要使用线性转换动画。
+            人类对线性运动非常敏感，因此丢帧会非常明显。相比之下，人类似乎很难跟踪放大或缩小的内容，所以大多数人都不会注意到缩放动画中发生的各种丢帧。</p>
+        <br>
+        <p>此示例使用具有恒定速度的可调摩擦力模拟，可以通过向左或向右轻拂来临时克服该速度。 注意由你传递的动量被消耗并且滚动器恢复其先前的动作时会发生什么。 它是流畅无缝的。</p>
+
+        <div class="example" id="iTunesRadioExample"></div><br>
+        <br>
+        <h2>映射输入和输出</h2>
+        <p>到目前为止，我们已经使用了按压和速度作为输入，并且我们已经将物理模拟的输出映射到对象的平移或比例。 我们的设备有一堆传感器，我们可以控制的不仅仅是初始速度。</p>
+        <br>
+        <p>这是一个使用陀螺仪来控制照片中的平移速度的示例（仅限移动设备）。这与Facebook Paper 的照片查看器类似，但 Facebook Paper 使用陀螺仪和滚动位置之间的直接关系。</p>
+        <br>
+        <p>请注意，此示例仅适用于具有陀螺仪的设备。</p>
+        <div class="example" id="gyroVelocityExample"></div><br>
+        <ul>
+            <li>当你想要连续拍照时很烦？我们可以在舍入到零的陀螺仪输出的中间添加一个死区以改善这一点。
+            </li>
+            <li>我最初用陀螺仪控制加速度编写了这个例子。 这感觉很糟糕！ 它会向左或向右加速，你会在另一个方向过度补偿。 控制速度感觉非常好，并且即使陀螺仪是相当嘈杂的传感器也能平稳地移动。
+            </li>
+        </ul>
+        <br>
+        <p>我们还可以根据接近度触发弹力。 我之前写过这个例子。 每个头像都有一个弹力，当光标靠近时会触发弹力。 然后通过弹力和光标位置控制头像的运动：弹力控制头像在其自然原始位置与光标当前位置之间应该有多远。</p>
+
+        <div class="example" id="fab">
+            <iframe src="../fab/demo/index.html"></iframe>
+        </div><br>
+        <p>这是一个以不同方式映射物理系统输出的示例。 这是上面的“下降对话”示例，除了它不是在撞击地面时将对话框向下位移，而是将其压缩。 非等比缩放看起来并不总是令人愉悦，因此在实际产品中很难找到这样的例子。</p>
+
+        <div class="example" id="squishyDialogsExample"></div><br>
+        <!-- adding extra non-physical effects: rotation on fall -->
+        <h2>添加额外的效果</h2>
+        <p>有时你已经有了一个漂亮的动画或互动，但你想要添加额外的非物理的东西。 这是一个向下降对话框添加旋转以使其看起来不那么单一的示例。 问答APP Jelly 在问题卡片的动画使用了这个很棒的效果。</p>
+
+        <div class="example" id="rotatingDialogsExample"></div><br>
+
+        <!-- conclusion -->
+        <h2>结论</h2>
+        <p>我们学到了什么？</p>
+        <ul>
+            <li>通过物理模型，我们可以轻松创建丰富的动画和交互，通过符合我们对事物应该如何移动和响应的内在期望来感受更自然。
+            </li>
+            <li>物理模型为我们提供了足够的灵活性，可以创建各种各样的交互和动画。
+            </li>
+            <li>可以组合物理模型以创建更复杂和动态的系统。
+            </li>
+            <li>我们可以对物理模型使用各种输入，并以不同的方式映射它们的结果以创建我们想要的效果。
+            </li>
+        </ul>
+        <br>
+        <p>我写了很多错误，并在撰写本文时重写了几个例子（<a
+                href="https://github.com/iamralpht/iamralpht.github.io/commits/master">在提交日志中读取我的错误</a>）。 我学到了什么？
+        </p>
+        <ul>
+            <li>在写这篇文章之前，我没有很好地掌握弹力常数和阻尼对弹力“感觉”的影响。 我对弹力有一个坚实的代数理解，但缺乏良好的直观理解。 这就是互动示例的力量！
+            </li>
+            <li>Android Wear Back 手势的 CSS 过渡版本实际上比我预期的更好，因此两个版本之间的差异比我想要的更微妙。 正如我上面提到的，我也尝试使用弹簧来模拟它，然后切换到感觉更好的加速度！
+            </li>
+            <li>不要在平移中将陀螺仪映射到加速度！It was obvious what I needed to do as soon as I saw it running, but it wasn’t
+                obvious
+                to me before.
+            </li>
+            <li>柔软的弹窗很整洁！ 我觉得虽然它看起来很糟糕，但我真的非常喜欢它。 巧合的是，挤压和拉伸是“<a
+                    href="http://en.wikipedia.org/wiki/12_basic_principles_of_animation#Squash_and_stretch">迪斯尼十二动画原则</a>”中最重要的。
+            </li>
+        </ul>
+        <br>
+        <p>所有上述示例的注释 JavaScript 源代码都可以在 <a
+                href="https://github.com/iamralpht/iamralpht.github.io/tree/master/physics">Github</a> 上找到。
+            还可以看一下我写的
+            Java 库 <a href="https://github.com/iamralpht/gravitas">Gravitas</a>，其中包含了许多这里使用的物理模型。</p>
+
 </body>
+
 </html>

@@ -110,12 +110,12 @@ function SlidersDemo(element) {
         return config;
     }
 
-    var decelSlider = new Slider(decelerate, 'Decelerating Slider', '#795548');
+    var decelSlider = new Slider(decelerate, 'Decelerating Slider', '#2578c5');
     this._element.appendChild(decelSlider.element());
 
     // Make a friction-slowed slider.
     var friction = new Friction(0.01);
-    var frictionSlider = new Slider(friction, 'Friction Slider', '#1b5e20');
+    var frictionSlider = new Slider(friction, 'Friction Slider', '#de4c4f');
     this._element.appendChild(frictionSlider.element());
 }
 window.addEventListener('load', function() { new SlidersDemo(document.getElementById('slidersExample')); }, false);

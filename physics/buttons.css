@@ -16,10 +16,11 @@
     margin: 10px;
     border-radius: 10px;
     min-width: 20%;
-    background-color: #0d47a1;
+    color: white;
+    background-color: #2578c5;
 }
 .buttondemo .spring-button {
-    background-color: #1b5e20;
+    background-color: #de4c4f;
 }
 /*
  * We can actually make the CSS button do everything declaratively. Even though the end result

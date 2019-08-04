@@ -6,21 +6,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/github-gist.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
 </head>
 
 <body>
     <div class="note-wrapper">
-        <h1>运动学方程</h1>
+        <h1>运动学公式</h1>
         <blockquote>
-            <p><i>原文： Ralph Thomas <a href="http://iamralpht.github.io/equations/">"Equations of motion"</a></i></p>
+            <p>原文：<i>Ralph Thomas <a href="http://iamralpht.github.io/equations/">Equations of motion</a></i></p>
         </blockquote>
         <br>
-        <p>Setup：像 Gravitas 这样的 UI 物理引擎非常简单，只需几个方程式来计算给定时间增量的位置。 Gravitas 模型有三种物理运动：摩擦力，恒定加速度和弹力。</p>
-        <br>
         <h2>摩擦力</h2>
-        <p>摩擦是最简单的方程：速度以恒定速率变小。 描述摩擦的最简单方法是设计出一个将每帧计算的新速度更新到位置的函数：</p>
-        <br>
-        <pre><code class='code-multiline'>var velocity = 2; // 2px 每帧
+        <p>物体受摩擦力作用进行运动的特征：速度以恒定速率变小。 </p>
+        <pre><code class='code-multiline javascript'>var velocity = 2; // 2px 每帧
 var position = 0; // 0px 为起点
 var friction = 0.99; // 每帧降低 1％ 的速度
 
@@ -29,7 +31,7 @@ function updatePosition() {
     velocity = velocity * friction;
 }</code></pre>
         <p><br></p>
-        <p>这就是受摩擦力作用的运动的简单实现，但是存在一些问题：</p>
+        <p>但是存在一些问题：</p>
         <ul>
             <li>如果丢帧，那么对象将表现出抖动，因为该函数不考虑自前一帧以来经过的时间量。
             </li>
@@ -38,8 +40,7 @@ function updatePosition() {
         </ul>
         <br>
         <p>首先让我们将速度表示为基于时间的函数：</p>
-        <br>
-        <pre><code class='code-multiline'>// 1s 后的速度为 v * drag，2s 后 v * drag * drag
+        <pre><code class='code-multiline javascript'>// 1s 后的速度为 v * drag，2s 后 v * drag * drag
 // 在 3s 之后速度为 v * drag * drag * drag
 // 即 initialVelocity * friction ^ deltaTime，用 JavaScript 表示：
 
@@ -48,18 +49,13 @@ function velocity(initialVelocity, friction, deltaTime) {
 }</code></pre>
         <p><br></p>
         <p>我们可以将其整合以获取基于时间的函数中的位置：</p>
-        <br>
-        <pre><code class='code-multiline'>function position(initialPosition, initialVelocity, friction, deltaTime) {
+        <pre><code class='code-multiline javascript'>function position(initialPosition, initialVelocity, friction, deltaTime) {
     return initialPosition + initialVelocity * Math.pow(friction, deltaTime) / Math.log(friction) - initialVelocity / Math.log(friction);
 }</code></pre>
         <p><br></p>
-        <p>这就是一个完整、精确的摩擦函数实现！ Gravitas 缓存摩擦的自然对数，但这就是它的全部！</p>
-        <p>Gravitas caches the natural log of friction, but that’s all there is too it!</p>
-        <br>
-        <h2>恒定加速度</h2>
-        <p>恒定加速度是另一个简单的方程。如果你已经在学校里学过微积分就明白了！我们再看一下速度方程，然后对它积分：</p>
-        <br>
-        <pre><code class='code-multiline'>//当前速度相对于时间是： v' = v + a*t.
+        <h2>引力</h2>
+        <p>对速度公式积分：</p>
+        <pre><code class='code-multiline javascript'>//当前速度相对于时间是： v' = v + a*t.
 
 function velocity(initialVelocity, acceleration, deltaTime) {
     return initialVelocity + acceleration * deltaTime;
@@ -72,22 +68,25 @@ function position(initialPosition, initialVelocity, acceleration, deltaTime) {
     return initialPosition + initialVelocity * deltaTime + 0.5 * acceleration * deltaTime * deltaTime;
 }</code></pre>
         <p><br></p>
-        <p>这就是恒定加速度 —— 一条线！</p>
-        <br>
         <h2>弹力: 三种情况</h2>
-        <p>现在我们到了弹力！ 取决于弹力常数和阻尼，有三种弹力：欠阻尼（弹簧在沉降前在终点附近弹跳），临界阻尼（弹簧有足够的阻尼来防止任何弹跳）和过阻尼（弹簧有足够的阻尼来防止弹跳）。Gravitas 的弹力实现基于胡克定律：
-        </p>
-        <br>
-        <pre><code class='code-multiline'>// F: force, k: spring constant, c: damping
+        <p>弹力取决于弹力常数和阻尼，有三种弹力类型：</p>
+        <ul>
+            <li>欠阻尼：弹簧在沉降前在终点附近弹跳
+            </li>
+            <li>临界阻尼：弹簧有足够的阻尼来防止任何弹跳
+            </li>
+            <li>过阻尼：弹簧有足够的阻尼来防止弹跳
+            </li>
+        </ul>
+        <p>这里弹力的实现基于胡克定律：</p>
+        <pre><code class='code-multiline javascript'>// F: force, k: spring constant, c: damping
 // x: position, v: velocity.
 F = -kx - cv</code></pre>
         <p><br></p>
-        <p>这可以作为二阶微分方程被积分。 我已经忘记了如何解决高阶微分方程，所以我在 <a
-                href="http://www.stewartcalculus.com/data/CALCULUS%20Concepts%20and%20Contexts/upfiles/3c3-AppsOf2ndOrders_Stu.pdf">this
-                physics textbook</a> 中查找了答案 - ”Damped Vibrations（阻尼振动）“ 部分就是我们想要的。 教科书相当清楚地解释了这些方程式，因此我将不再重复，直接展示
-            Gravitas 用来计算弹簧的位置和速度作为时间函数的 JavaScript 代码。</p>
-        <br>
-        <pre><code class='code-multiline'>// 该方法采用 初始位置，初始速度，质量，弹力常数和阻尼
+        <p>这可以作为二阶微分公式被积分。 我已经忘记了如何解决高阶微分公式，所以我在这本 <a href='files/3c3-AppsOf2ndOrders_Stu.pdf'>物理教科书</a> 中查找了答案——”
+            Damped Vibrations（阻尼振动）“ 部分就是我们想要的。 教科书相当清楚地解释了这些公式，因此这里不再重复，直接展示用来计算以弹簧的位置和速度作为时间函数的 JavaScript
+            代码：</p>
+        <pre><code class='code-multiline javascript'>// 该函数采用 初始位置，初始速度，质量，弹力常数和阻尼
 // 并返回一个函数，使位置和速度作为时间的函数
 //
 // 只有质量，弹力常数和阻尼能改变弹力是否欠阻尼，临界阻尼或欠阻尼
@@ -98,7 +97,7 @@ F = -kx - cv</code></pre>
 // @param k         弹性常数
 
 function solveSpring(initial, velocity, c, m, k) {
-    // 求解二次方程; root = (-c +/- sqrt(c^2 - 4mk)) / 2m.
+    // 求解二次公式; root = (-c +/- sqrt(c^2 - 4mk)) / 2m.
     var cmk = c * c - 4 * m * k;
     if (cmk == 0) {
         // The spring is critically damped.
@@ -143,9 +142,8 @@ function solveSpring(initial, velocity, c, m, k) {
             }
         };
     }
-}</code></pre>
-        <p><br></p>
-        <p>好吧，所以弹力比摩擦力、恒定加速度更复杂，但解决弹力生成的实际功能仍然非常简单。</p>
+}
+</code></pre>
     </div>
     <script type="text/javascript">
         (function () {

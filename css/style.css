@@ -155,7 +155,7 @@ html {
 
 html {
     font-size: 14px;
-    line-height: 1.6em;
+    line-height: 1.8em;
     -webkit-text-size-adjust: 100%
 }
 
@@ -239,8 +239,14 @@ em {
     font-family: "AvenirNext-Italic"
 }
 
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 code {
-    font-family: "Menlo-Regular"
+    font-family: "Menlo-Regular";
+    margin: 0.5em 0;
 }
 
 .text-overflow-ellipsis {

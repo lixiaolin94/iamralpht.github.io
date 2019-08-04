@@ -1,26 +1,26 @@
 .controls {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
+    background-color: white;
+    border-radius: 3px;
     margin-left: auto;
     margin-right: auto;
     width: 400px;
     padding: 10px;
-    font-size: 18px;
-    text-align: center;
-    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(0, 0, 0, 0.3);
     margin-bottom: 10px;
+    border: solid 1px #ddd;
 }
 .controls div {
     margin-bottom: 10px;
 }
 .controls>.reset-control {
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
     padding: 5px;
     margin: 0 5px;
+    color: white;
+    background: #333;
+    border-radius: 3px;   
 }
 .controls>.reset-control:active {
-    background-color: rgba(255, 255, 255, 0.3);
+    background: #333;
+    opacity: 0.5;
 }
 .slider-control-row {
     position: relative;
@@ -31,7 +31,6 @@
     position: absolute;
     width: 120px;
     left: 0;
-    font-size: 16px;
     text-align: right;
 }
 .slider-control-row>input {
@@ -85,20 +84,16 @@
     height: 6px;
 
     border-radius: 3px;
-    background-color: #202020;
-    box-shadow: inset 0 1px 1px black, 0 1px 1px rgba(255, 255, 255, 0.5);
+    background-color: #dedede;
 }
 .controls .slider>.thumb {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 2em;
+    height: 2em;
     box-sizing: border-box;
-
-    border-radius: 15px;
-    box-shadow: inset 0 1px 1px white, 0 1px 1px black;
-    border: 1px solid black;
-    background: #0d47a1;
-
+    border-radius: 1em;
+    background: #de4c4f;
+    color: white;
     will-change: transform;
     -webkit-transform: translateZ(0);
 }
@@ -106,14 +101,14 @@
     will-change: transform, opacity;
     pointer-events: none;
     position: absolute;
-    left: -15px;
-    width: 60px;
-    height: 30px;
+    left: -1em;
+    width: 4em;
+    height:2em;
     -webkit-transform: scale(0.6) translateZ(0);
     transform: scale(0.6);
     opacity: 0;
     background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 5px;
+    border-radius: 3px;
     -webkit-transition: -webkit-transform 200ms, opacity 100ms 50ms;
     transition: transform 200ms, opacity 100ms 50ms;
 }
@@ -121,9 +116,9 @@
     will-change: transform;
     pointer-events: none;
     position: absolute;
-    left: -15px;
-    width: 60px;
-    height: 30px;
+    left: -1em;
+    width: 4em;
+    height: 2em;
     -webkit-transform: scale(0.6) translateZ(0);
     transform: scale(0.6);
     text-align: center;
