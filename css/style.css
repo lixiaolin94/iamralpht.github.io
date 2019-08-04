@@ -239,14 +239,12 @@ em {
     font-family: "AvenirNext-Italic"
 }
 
-pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
 code {
-    font-family: "Menlo-Regular";
     margin: 0.5em 0;
+    font-family: "Menlo-Regular";
+    font-size: 0.9em;
+    background: white;
+    border: solid 1px #dedede;
 }
 
 .text-overflow-ellipsis {
@@ -337,14 +335,15 @@ hr {
 }
 
 ul li {
-    text-indent: -0.35em
+    text-indent: -0.6em;
+    margin-left: 1.2em;
 }
 
 ul li:before {
     content: "•";
     color: #e06e73;
     display: inline-block;
-    margin-right: 0.3em
+    margin-right: 0.6em
 }
 
 ul ul {
@@ -361,7 +360,6 @@ ol ol {
 
 blockquote {
     display: block;
-    margin-left: -1em;
     padding-left: 0.8em;
     border-left: 0.2em solid #e06e73
 }
@@ -405,18 +403,10 @@ blockquote {
 
 .code-inline {
     display: inline;
-    background: white;
-    border: solid 1px #dedede;
-    padding: 0.2em 0.5em;
-    font-size: 0.9em
 }
 
 .code-multiline {
     display: block;
-    background: white;
-    border: solid 1px #dedede;
-    padding: 0.7em 1em;
-    font-size: 0.9em;
     overflow-x: auto
 }
 
